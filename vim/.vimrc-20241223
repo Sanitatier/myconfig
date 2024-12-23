@@ -1,0 +1,235 @@
+" Alexey Chernyshev's great vim config 2024-12
+
+" Short help {{{
+" - TIPS
+"     to retab all tabs to spaces use :%retab
+"     to go to file under cursor use gf and return <C-o> or <C-6>
+" - folding
+"   Vim folding :help usr_28
+"     zo or l to open fold
+"     zc close fold
+"     za togle fold
+"     zM close all, zR open all
+"     select text with shift-v and zf to create fold
+" - View Git commits | junegunn/gv.vi
+"     :GV for all
+"     :GV! for current file
+"     :GV? for list of commits for current file in command panel
+" - Tab guides | nathanaelkane/vim-indent-guides
+"     <leader>ig toggle guides
+" - Ansible | pearofducks/ansible-vim
+"     <leader>gr to open role task main.yml under cursor
+" - Commentary toggle | tpope/vim-commentary
+"     gcc  comment uncomment the current line
+"     gc   comment uncomment the selection in Visual mode
+"     gcap comment uncomment the paragraph (:help text-objects)
+" - Vim Splits  :help splits
+"     Create splits
+"       for current buffer vertical :vsp  horizontal :sp
+"       for file :vsp ~/.filename
+"       specify split hight  :10sp roles/playbook/main.yml
+"       close current :q
+"     Resizing split
+"       Vim’s defaults are useful for changing split shapes:
+"         Max out the height of the current split:   ctrl + w _
+"         Max out the width of the current split:    ctrl + w |
+"         Normalize all split sizes:                 ctrl + w =
+"       More split manipulation:
+"         Swap top/bottom or left/right split:         Ctrl+W R
+"         Break out current window into a new tabview: Ctrl+W T
+"         Close every window in the current tabview but the current one: Ctrl+W o
+"
+" - my key bindings
+"   common
+"     Use Space as <leader> key
+"     <leader>l to toggle set list
+"     <leader>r to toggle set relativenumber
+"     <leader>3 or 8 to toggle hlsearch
+"   NERDTree
+"     <leader>n :NERDTreeFocus
+"     <C-n> :NERDTree
+"     <C-t> :NERDTreeToggle
+"     <C-f> :NERDTreeFind
+"   Buffers manipulation
+"     new buffer   <leader>bN
+"     next buffer  <leader>bn
+"     prev buffer  <leader>bb
+"     close buffer <leader>bq
+"     list buffers <leader>bl
+"   Split manipulation
+"     To bottom pane <C-J>, default <C-W><C-J>
+"     To upper  pane <C-K>, default <C-W><C-K>
+"     To left   pane <C-H>, default <C-W><C-H>
+"     To right  pane <C-L>, default <C-W><C-L>
+
+" install vim-plug
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"   After add new plugin to list between lines 'call plug#begin()' and 'call plug#end()'
+"   run :w :source % then run :PlugInstall
+" Other plugin commands :PlugUpdate :PlugClean
+
+" }}}
+
+syntax on
+set nocompatible
+set number
+" Set Space key as Leader key
+let mapleader = " "
+set clipboard=unnamedplus
+filetype plugin indent on
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:·
+set splitbelow
+set splitright
+" set laststatus=2
+runtime macros/matchit.vim
+
+" Key bindings {{{
+" toggle set list
+nnoremap <leader>l :set list!<cr>
+" toggle set relativenumer
+nnoremap <leader>r :set relativenumber!<cr>
+" toggle search highlighting
+nnoremap <leader>3 :set hlsearch!<cr>
+nnoremap <leader>8 :set hlsearch!<cr>
+" buffers manipulations
+nnoremap <leader>bN   :enew<CR>
+nnoremap <leader>bn   :bnext!<CR>
+nnoremap <leader>bb   :bprevious!<CR>
+nnoremap <leader>bq   :bp <BAR> bd #<CR>
+nnoremap <leader>bl   :ls<CR>
+
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+"}}}
+
+" Activate plugins {{{
+
+call plug#begin()
+
+    " List my plugins
+    Plug 'pearofducks/ansible-vim'
+    "Plug 'sheerun/vim-polyglot'
+    Plug 'joshdick/onedark.vim'
+    Plug 'ayu-theme/ayu-vim'
+    Plug 'nathanaelkane/vim-indent-guides' " toggle guides <leader>ig
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    Plug 'airblade/vim-gitgutter'
+    Plug 'mhinz/vim-signify'
+    Plug 'tpope/vim-fugitive'     " Tim Pope Git plugin
+    Plug 'tpope/vim-commentary'   " Tim Pope commentary plugin
+    Plug 'junegunn/gv.vim'
+    Plug 'preservim/nerdtree'
+    Plug 'xuyuanp/nerdtree-git-plugin'
+    Plug 'PhilRunninger/nerdtree-buffer-ops'
+" After add new plugin to list abobe run :w :source % then run :PlugInstall
+" Other plugin commands :PlugUpdate :PlugClean
+
+call plug#end()
+
+" }}}
+
+" Settings for pearofducks/ansible-vim {{{
+" https://github.com/pearofducks/ansible-vim?tab=readme-ov-file
+let g:ansible_unindent_after_newline = 1
+let g:ansible_attribute_highlight = 'od'
+let g:ansible_template_syntaxes = { '*.conf.j2': 'conf' }
+"
+" let g:ansible_yamlKeyName = 'yamlKey'
+" let g:ansible_name_highlight = 'b'
+let g:ansible_normal_keywords_highlight = 'Constant'
+let g:ansible_extra_keywords_highlight = 1
+let g:ansible_extra_keywords_highlight_group = 'Statement'
+"
+" }}}
+
+" Settings for indent guides {{{
+
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_guide_size = 1
+let g:indent_guides_auto_colors = 0
+
+" }}}
+
+" Color schema settings {{{
+set termguicolors
+colorscheme onedark
+let g:airline_theme='onedark'
+" let ayucolor="dark"
+" let ayucolor="mirage"
+" colorscheme ayu
+" let g:airline_theme='ayu'
+
+hi IndentGuidesOdd  ctermbg=234
+hi IndentGuidesEven ctermbg=235
+" set background=dark
+" colors for vim-indent-guides
+
+" }}}
+
+" airline settings {{{
+
+let g:airline#extensions#tabline#enabled = 1
+
+"}}}
+
+" vim-signify settings {{{
+set updatetime=100
+"}}}
+
+" Nerdtree settings {{{
+"
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
+" let g:NERDTreeFileLines = 1
+
+" }}}
+
+" go to role snippet {{{
+"   Use ledaer gr to go to role under cursor like leader gf for file
+"   Use Ctrl-6 to toggle between two files, or Ctrl-o to back previous edit
+"   place
+"
+" let g:ansible_goto_role_paths = './roles,../_common/roles'
+
+function! FindAnsibleRoleUnderCursor()
+  if exists("g:ansible_goto_role_paths")
+    let l:role_paths = g:ansible_goto_role_paths
+  else
+    let l:role_paths = "./roles"
+  endif
+  let l:tasks_main = expand("<cfile>") . "/tasks/main.yml"
+  let l:found_role_path = findfile(l:tasks_main, l:role_paths)
+  if l:found_role_path == ""
+    echo l:tasks_main . " not found"
+  else
+    execute "edit " . fnameescape(l:found_role_path)
+  endif
+endfunction
+" au BufRead,BufNewFile */ansible/*.yml
+nnoremap <leader>gr :call FindAnsibleRoleUnderCursor()<CR>
+" au BufRead,BufNewFile */ansible/*.yml
+vnoremap <leader>gr :call FindAnsibleRoleUnderCursor()<CR>
+" }}}
+
+" Vimscript {{{
+
+" Enable folding for vimrc
+augroup filetype_vim
+        autocmd!
+        autocmd FileType vim setlocal foldmethod=marker
+augroup END
+
+" }}}
+
