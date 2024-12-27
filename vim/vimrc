@@ -1,67 +1,137 @@
 " Alexey Chernyshev's great vim config 2024-12
+" za - open fold, zR -open all folds
 
 " Short help {{{
-" - TIPS
-"     to retab all tabs to spaces use :%retab
-"     to go to file under cursor use gf and return <C-o> or <C-6>
-" - folding
-"   Vim folding :help usr_28
-"     zo or l to open fold
-"     zc close fold
-"     za togle fold
-"     zM close all, zR open all
-"     select text with shift-v and zf to create fold
-" - View Git commits | junegunn/gv.vi
-"     :GV for all
-"     :GV! for current file
-"     :GV? for list of commits for current file in command panel
-" - Tab guides | nathanaelkane/vim-indent-guides
-"     <leader>ig toggle guides
-" - Ansible | pearofducks/ansible-vim
-"     <leader>gr to open role task main.yml under cursor
-" - Commentary toggle | tpope/vim-commentary
-"     gcc  comment uncomment the current line
-"     gc   comment uncomment the selection in Visual mode
-"     gcap comment uncomment the paragraph (:help text-objects)
-" - Vim Splits  :help splits
-"     Create splits
-"       for current buffer vertical :vsp  horizontal :sp
-"       for file :vsp ~/.filename
-"       specify split hight  :10sp roles/playbook/main.yml
-"       close current :q
-"     Resizing split
-"       Vim’s defaults are useful for changing split shapes:
-"         Max out the height of the current split:   ctrl + w _
-"         Max out the width of the current split:    ctrl + w |
-"         Normalize all split sizes:                 ctrl + w =
-"       More split manipulation:
-"         Swap top/bottom or left/right split:         Ctrl+W R
-"         Break out current window into a new tabview: Ctrl+W T
-"         Close every window in the current tabview but the current one: Ctrl+W o
+" - TIPS --------------------------------------------------
+"   - to retab all tabs to spaces use :%retab
+"   - to go to file under cursor use <gf> and return <C-o> or <C-6>
 "
-" - my key bindings
-"   common
-"     Use Space as <leader> key
-"     <leader>l to toggle set list
-"     <leader>r to toggle set relativenumber
-"     <leader>3 or 8 to toggle hlsearch
-"   NERDTree
-"     <leader>n :NERDTreeFocus
-"     <C-n> :NERDTree
-"     <C-t> :NERDTreeToggle
-"     <C-f> :NERDTreeFind
-"   Buffers manipulation
-"     new buffer   <leader>bN
-"     next buffer  <leader>bn
-"     prev buffer  <leader>bb
-"     close buffer <leader>bq
-"     list buffers <leader>bl
-"   Split manipulation
-"     To bottom pane <C-J>, default <C-W><C-J>
-"     To upper  pane <C-K>, default <C-W><C-K>
-"     To left   pane <C-H>, default <C-W><C-H>
-"     To right  pane <C-L>, default <C-W><C-L>
+" - Folding -----------------------------------------------
+"   Vim folding :help usr_28
+"   - <zo> or <l> open  fold
+"   - <zO> open all folds at the cursor
+"   - <zc> close fold
+"   - <za> togle fold
+"   - <zm> increases the foldlevel by one
+"   - <zM> close all
+"   - <zr> decreases the foldlevel by one
+"   - <zR> open  all
+"
+"   - <zj> move to the next fold
+"   - <zk> move to the prev fold
+"   - <[z> move to start of open fold
+"   - <]z> move to end of open fold
+"
+"   - select text with <shift-v> and <zf> to create fold from selected lines
+"   - <zf#j>      creates a fold form the cursor down # lines
+"   - <zf/string> creates a fold from the cursor to string
+"   - <zd> deletes the current fold
+"   - <zE> deletes all folds
+"   
+" - Vim Splits  :help splits -------------------------------
+"   - Create splits
+"     - for current buffer vertical :vsp  horizontal :sp
+"     - for file :vsp ~/.filename
+"     - specify split hight  :10sp roles/playbook/main.yml
+"     - close current :q  
+"   - Resizing split
+"     Vim’s defaults are useful for changing split shapes:
+"     - <C-w _>  Max out the height of the current split
+"     - <C-w |>  Max out the width  of the current split
+"     - <C-w =>  Normalize all split sizes
+"   - More split manipulation:
+"     - <C+W R>  Swap top/bottom or left/right split
+"     - <C+W T>  Break out current window into a new tabview
+"     - <C+W o>  Close every window in the current tabview, but the current one
+"     
+" - Vim CASE ----------------------------------------------
+"   - <~>     toggle case at the cursor
+"   - <g~iw>  toggle case current word
+"   - <g~~> or <V~> toggle case current line
+"   - <gUiw>  uppercase current word
+"   - <gUU> or <VU> uppercase current line
+"   - <guu> or <Vu> lowercase
+"   - select text with <V> or <v> and <~>
+"
+" - Vim marks ---------------------------------------------
+"   lowercase - current buffer, uppercase - global
+"   - ma - set mark a at current cursor location
+"   - 'a - jump to line of mark a
+"   - `a - jump to position of mark a
+"   - d`a - delete from cersor to position of marked a
+"   - c'a - change text from cerrent line to line maked a
+"   - y`a - yank text from cursor to pos of mark a
+"   - :marks - list all current marks
+"   - :marks aB - list marks a, B
+"
+"   special mark
+"   - `0 - jump to position in last file edited
+"   - `1 - like `0 but to the prev file, also `2 `3 etc
+"
+"   - [' ]' - jump to next or previous lowercase marked line
+"   - [` ]` - jump to next or previous mark
+"     and may use count for example 3[' jumps to third mark after cursor
+"
+"   - :delmarks or :delm
+"   - :delmarks a - delete mark a
+"   - :delmarks a-d - delete abcd marks
+"   - :delmarks Aa - delete a and A marks
+"   - :delmarks! - delete all lowercase marks for current buffer
+"
+" - Vim autocomplete --------------------------------------
+"   - in insert mode press <C-n>, Esc - exit, Enter -select
+"   
+" - View Git commits --------------------------------------
+"   Git Navigator for Vim | junegunn/gv.vi ----------------
+"   - :GV  for all
+"   - :GV! for current file
+"   - :GV? for list of commits for current file in command panel
 
+" - Tab guides | nathanaelkane/vim-indent-guides ----------
+"   - <leader>ig  toggle guides
+"
+" - Ansible | pearofducks/ansible-vim ---------------------
+"   - <leader>gr  to open role task main.yml under cursor
+"
+" - Commentary toggle | tpope/vim-commentary --------------
+"   - <gcc>  comment uncomment the current line
+"   - <gc>   comment uncomment the selection in Visual mode
+"   - <gcap> comment uncomment the paragraph (:help text-objects)
+"
+" - Vim surround, replace quotes | tpope/vim-surround -----
+"   https://github.com/tpope/vim-surround
+"   - <cs"'>  replace quotes " to '
+"   - <ds">   remove quotes
+"   - <ysiw]> current word to []
+"   - <cs]{>  replace [] to {}
+"   - <ussb>  or <yss)> () around line
+"   
+" - NERDTree ----------------------------------------------
+"   - <leader>n :NERDTreeFocus
+"   - <C-n>     :NERDTree
+"   - <C-t>     :NERDTreeToggle
+"   - <C-f>     :NERDTreeFind
+"
+" - My key bindings ---------------------------------------
+"   I use Space as <leader> key
+"   - common
+"     - <leader>l to toggle set list
+"     - <leader>r to toggle set relativenumber
+"     - <leader>3 or 
+"     - <leader>8    to toggle hlsearch
+"   - Buffers manipulation
+"     - <leader>bN     new buffer   
+"     - <leader>bn    next buffer  
+"     - <leader>bb    prev buffer  
+"     - <leader>bq   close buffer 
+"     - <leader>bl    list buffers 
+"   - Split manipulation
+"     - <C-J>   To bottom pane, default <C-W><C-J>
+"     - <C-K>   To upper  pane, default <C-W><C-K>
+"     - <C-H>   To left   pane, default <C-W><C-H>
+"     - <C-L>   To right  pane, default <C-W><C-L>
+"
+" ---------------------------------------------------------
 " install vim-plug
 " curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 "   After add new plugin to list between lines 'call plug#begin()' and 'call plug#end()'
@@ -89,12 +159,12 @@ runtime macros/matchit.vim
 
 " Key bindings {{{
 " toggle set list
-nnoremap <leader>l :set list!<cr>
+nnoremap <leader>l :set list!<CR>
 " toggle set relativenumer
-nnoremap <leader>r :set relativenumber!<cr>
+nnoremap <leader>r :set relativenumber!<CR>
 " toggle search highlighting
-nnoremap <leader>3 :set hlsearch!<cr>
-nnoremap <leader>8 :set hlsearch!<cr>
+nnoremap <leader>3 :set hlsearch!<CR>
+nnoremap <leader>8 :set hlsearch!<CR>
 " buffers manipulations
 nnoremap <leader>bN   :enew<CR>
 nnoremap <leader>bn   :bnext!<CR>
@@ -114,21 +184,25 @@ nnoremap <C-H> <C-W><C-H>
 call plug#begin()
 
     " List my plugins
-    Plug 'pearofducks/ansible-vim'
-    "Plug 'sheerun/vim-polyglot'
-    Plug 'joshdick/onedark.vim'
-    Plug 'ayu-theme/ayu-vim'
+    " Plug 'joshdick/onedark.vim'            " Best thene for my
+    " Plug 'ayu-theme/ayu-vim'
+    Plug 'sonph/onehalf', { 'rtp': 'vim' }
+
+    Plug 'pearofducks/ansible-vim'         " For ansible highlight
+    " Plug 'sheerun/vim-polyglot'
     Plug 'nathanaelkane/vim-indent-guides' " toggle guides <leader>ig
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
-    Plug 'airblade/vim-gitgutter'
-    Plug 'mhinz/vim-signify'
-    Plug 'tpope/vim-fugitive'     " Tim Pope Git plugin
-    Plug 'tpope/vim-commentary'   " Tim Pope commentary plugin
-    Plug 'junegunn/gv.vim'
-    Plug 'preservim/nerdtree'
-    Plug 'xuyuanp/nerdtree-git-plugin'
-    Plug 'PhilRunninger/nerdtree-buffer-ops'
+    Plug 'vim-airline/vim-airline'         " status bar svistoperdelki
+    Plug 'vim-airline/vim-airline-themes'  " themes for airline
+    Plug 'kshenoy/vim-signature'           " left bar marks
+    Plug 'airblade/vim-gitgutter'          " left bar git marks not simple
+    " Plug 'mhinz/vim-signify'               " left bar git marks simple
+    Plug 'tpope/vim-surround'              " Tim Pope quotas changer
+    Plug 'tpope/vim-fugitive'              " Tim Pope Git plugin
+    Plug 'tpope/vim-commentary'            " Tim Pope commentary plugin
+    Plug 'junegunn/gv.vim'                 " Git Navigator for VIM :GV :GV! :GV?
+    Plug 'preservim/nerdtree'              " File manager
+    Plug 'xuyuanp/nerdtree-git-plugin'     " show git status in nt
+    Plug 'PhilRunninger/nerdtree-buffer-ops'  " 
 " After add new plugin to list abobe run :w :source % then run :PlugInstall
 " Other plugin commands :PlugUpdate :PlugClean
 
@@ -159,9 +233,18 @@ let g:indent_guides_auto_colors = 0
 " }}}
 
 " Color schema settings {{{
-set termguicolors
-colorscheme onedark
-let g:airline_theme='onedark'
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+set t_Co=256
+set cursorline
+colorscheme onehalfdark
+let g:airline_theme='onehalfdark'
+
+" colorscheme onedark
+" let g:airline_theme='onedark'
 " let ayucolor="dark"
 " let ayucolor="mirage"
 " colorscheme ayu
@@ -181,9 +264,20 @@ let g:airline#extensions#tabline#enabled = 1
 "}}}
 
 " vim-signify settings {{{
-set updatetime=100
+" set updatetime=100
 "}}}
 
+" airblade/vim-gitgutter settings {{{
+set updatetime=100
+" let g:gitgutter_enabled = 0             " turn off vim-gitgutter
+let g:gitgutter_signs = 0               " turn off signs
+" let g:gitgutter_highlight_lines = 1     " turn on line highlighting
+" let g:gitgutter_highlight_linenrs = 1   " turn on line number highlighting
+map <F2> :GitGutterLineHighlightsToggle<CR>
+map <F3> :GitGutterSignsToggle<CR>
+map <F4> :GitGutterDiffOrig<CR>
+"  }}}
+"
 " Nerdtree settings {{{
 "
 nnoremap <leader>n :NERDTreeFocus<CR>
@@ -223,12 +317,18 @@ nnoremap <leader>gr :call FindAnsibleRoleUnderCursor()<CR>
 vnoremap <leader>gr :call FindAnsibleRoleUnderCursor()<CR>
 " }}}
 
+" Filetypes {{{
+"
+au BufRead,BufNewFile inv-* set syntax=ansible_hosts
+"
+" }}}
+"
 " Vimscript {{{
 
 " Enable folding for vimrc
 augroup filetype_vim
-        autocmd!
-        autocmd FileType vim setlocal foldmethod=marker
+  autocmd!
+  autocmd FileType vim setlocal foldmethod=marker
 augroup END
 
 " }}}
