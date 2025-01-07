@@ -29,6 +29,7 @@ alias lart='ls -alFrt'
 alias la='ls -A'
 alias l='ls -CF'
 alias tmux='TERM=xterm-256color tmux'
+alias vi='TERM=xterm-256color vi'
 alias vim='TERM=xterm-256color vim'
 alias ccat="highlight -O ansi"
 alias anpb="ansible-playbook"
@@ -70,11 +71,17 @@ eval `ssh-agent`
 #}
 
 # LS COLORS
-# . ~/.bashexts/lscolors.sh
-export LS_COLORS="$(vivid generate snazzy)"
+## export LS_COLORS="$(vivid generate snazzy)"
+
+## Prompt
+# $ cd $WHERE_YOU_KEEP_GITHUB_REPOS
+# $ git clone https://github.com/skeswa/prompt
+# $ cd prompt
+# $ make install
 
 # Use 'skeswa/prompt' which is symlinked to '~/.prompt'.
 . ~/.prompt/prompt.bash
+
 
 # Add git completion to the prompt (comes from 'skeswa/prompt').
 # . ~/.prompt/git-completion.bash
@@ -82,5 +89,22 @@ export LS_COLORS="$(vivid generate snazzy)"
 #
 # Set up fzf key bindings and fuzzy completion
 eval "$(fzf --bash)"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/achern/miniforge3/bin/conda' 'shell.bash' 'hook' 'commands' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/achern/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "/home/achern/miniforge3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/achern/miniforge3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+# Conda autocomplete
+eval "$(register-python-argcomplete conda)"
 #Keep zoxide bottom
 eval "$(zoxide init bash)"
