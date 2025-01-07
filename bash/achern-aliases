@@ -1,0 +1,19 @@
+#  aliases
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+alias ll='ls -alF'
+alias lart='ls -alFrt'
+alias la='ls -A'
+alias l='ls -CF'
+alias tmux='TERM=xterm-256color tmux'
+alias vi='TERM=xterm-256color vi'
+alias vim='TERM=xterm-256color vim'
+alias ccat="highlight -O ansi"
+alias anpb="ansible-playbook"
+alias tmx="TERM=xterm-256color tmux attach -t default || tmux new -s default"
+alias sshans="ssh -i .ssh/ans.priv -l ansible"
+alias cdanpb="cd ~/prj/ansiblepb"
+alias cdtask="cd ~/task"
+alias snotes='sncli -c ~/task/simplenote/sncli.cfg'
+
