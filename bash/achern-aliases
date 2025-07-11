@@ -12,6 +12,7 @@ alias vim='TERM=xterm-256color vim'
 alias ccat="highlight -O ansi"
 alias anpb="ansible-playbook"
 alias tmx="TERM=xterm-256color tmux attach -t default || tmux new -s default"
+alias tmuxx="TERM=xterm-256color tmux  new -A -s "
 alias sshans="ssh -i .ssh/ans.priv -l ansible"
 alias cdanpb="cd ~/prj/ansiblepb"
 alias cdtask="cd ~/task"
