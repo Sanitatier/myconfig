@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # This value is used to hold the return value of the prompt sub-functions.
 __prompt_retval=""
@@ -47,6 +47,11 @@ fi
 __prompt_conda_color="${__prompt_color_prefix}${__prompt_256_prefix}158${__prompt_color_suffix}"
 if ! [[ -z $PROMPT_CONDA_COLOR ]]; then
   __prompt_conda_color="${__prompt_color_prefix}${PROMPT_CONDA_COLOR}${__prompt_color_suffix}"
+fi
+
+__prompt_icon4host_color="${__prompt_color_prefix}${__prompt_256_prefix}250${__prompt_color_suffix}"
+if ! [[ -z $PROMPT_ICON4HOST_COLOR ]]; then
+  __prompt_icon4host_color="${__prompt_color_prefix}${PROMPT_ICON4HOST_COLOR}${__prompt_color_suffix}"
 fi
 
 # Gets the current working directory path, but shortens the directories in the
@@ -120,12 +125,22 @@ function __prompt_get_git_stuff() {
     __prompt_retval=''
   fi
 }
-
+# Conda active profile
 function __prompt_get_conda_env() {
   if ! [[ -z $CONDA_DEFAULT_ENV ]]; then
     __prompt_retval="$CONDA_DEFAULT_ENV "
   else
     # Return empty if there is no conda env.
+    __prompt_retval=''
+  fi
+}
+
+# Icon ident current host
+function __prompt_get_icon4host() {
+  if ! [[ -z $ICON4HOST ]]; then
+    __prompt_retval="$ICON4HOST "
+  else
+    # Return empty if there is no set icon.
     __prompt_retval=''
   fi
 }
@@ -141,6 +156,8 @@ function __prompt_command() {
   # Calculate prompt parts.
   __prompt_get_conda_env
   local conda_env="${__prompt_conda_color}${__prompt_retval}"
+  __prompt_get_icon4host
+  local icon4host="${__prompt_icon4host_color}${__prompt_retval}"
   __prompt_get_short_pwd
   local short_pwd="${__prompt_pwd_color}${__prompt_retval}"
   __prompt_get_host
@@ -150,7 +167,7 @@ function __prompt_command() {
   local dollar="${dollar_color}$"
 
   # Set the PS1 to the new prompt.
-  PS1="${conda_env}${host}${git_stuff} ${short_pwd} ${dollar}${__prompt_no_color} "
+  PS1="${icon4host}${conda_env}${host}${git_stuff} ${short_pwd} ${dollar}${__prompt_no_color} "
   # PS1="${host}${git_stuff} ${short_pwd} ${dollar}${__prompt_no_color} "
 }
 
