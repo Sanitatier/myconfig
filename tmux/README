@@ -1,0 +1,17 @@
+Create a file named xterm-256color-italic.terminfo and put these lines in it:
+
+xterm-256color-italic|xterm with 256 colors and italic,
+  sitm=\E[3m, ritm=\E[23m,
+  use=xterm-256color,
+Now, compile the xterm-256color-italic.terminfo file with tic:
+
+$ tic xterm-256color-italic.terminfo
+
+add to ~/.tmux.conf
+  # Terminal type
+  set-option -g  default-terminal   "xterm-256color-italic"
+
+
+
+===
+https://rsapkf.org/weblog/vim-tmux-italics
